@@ -1,1 +1,1 @@
-## Text data extractor: PDF to Text
+# Text data extractor: PDF to Text
