@@ -1,0 +1,2 @@
+streamlit==1.7.0
+pdfminer==20191125
