@@ -14,3 +14,7 @@ B --> |Option 2| E[ZIP folder containing .txt file pages]
 
 ```
 
+## Application Demo
+
+https://user-images.githubusercontent.com/50157142/169509962-48d34c24-16a3-441f-af93-8702890fcf18.mp4
+
