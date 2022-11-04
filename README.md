@@ -1,6 +1,8 @@
 # Text data extractor: PDF to Text
 [![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://share.streamlit.io/nainiayoub/pdf-text-data-extractor/main/app.py)
 ![visitor badge](https://visitor-badge.glitch.me/badge?page_id=nainiayoub.pdf-text-data-extractor)
+![forks badge](https://img.shields.io/github/forks/nainiayoub/pdf-text-data-extractor)
+![starts badge](https://img.shields.io/github/stars/nainiayoub/pdf-text-data-extractor?style=social)
 
 This PDF text data extraction app takes a PDF document as input and return either a txt file that contains all pages or a compressed folder of txt files representing the document pages.
 
