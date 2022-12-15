@@ -91,6 +91,7 @@ if pdf_file:
     # pdf to text
     if textOutput == 'One text file (.txt)':
         if ocr_box:
+            st.write(pdf_file.read())
             texts, nbPages = images_to_txt(pdf_file.read())
             totalPages = "Pages: "+str(nbPages)+" in total"
             text_data_f = "\n\n".join(texts)
