@@ -11,20 +11,6 @@ html_temp = """
             </div>
             """
 
-@st.cache
-def images_to_txt(path):
-    images = pdf2image.convert_from_bytes(path)
-    all_text = []
-    for i in images:
-        pil_im = i
-        text = pytesseract.image_to_string(pil_im, lang=language)
-        # ocr_dict = pytesseract.image_to_data(pil_im, lang='eng', output_type=Output.DICT)
-        # ocr_dict now holds all the OCR info including text and location on the image
-        # text = " ".join(ocr_dict['text'])
-        # text = re.sub('[ ]{2,}', '\n', text)
-        all_text.append(text)
-    return all_text, len(all_text)
-
 # st.markdown("""
 #     ## :outbox_tray: Text data extractor: PDF to Text
     
@@ -47,8 +33,7 @@ with st.sidebar:
         "How do you want your output text?",
         ('One text file (.txt)', 'Text file per page (ZIP)'))
     ocr_box = st.checkbox('Enable OCR (scanned document)')
-    if ocr_box:
-        option = st.selectbox('Select the document language', list(languages.keys()))
+    
     st.markdown(html_temp.format("rgba(55, 53, 47, 0.16)"),unsafe_allow_html=True)
     st.markdown("""
     # How does it work?
@@ -84,7 +69,8 @@ if pdf_file:
     # display document
     with st.expander("Display document"):
         displayPDF(pdf_file)
-    
+    if ocr_box:
+        option = st.selectbox('Select the document language', list(languages.keys()))
     # pdf to text
     if textOutput == 'One text file (.txt)':
         if ocr_box:
