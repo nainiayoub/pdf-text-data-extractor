@@ -53,22 +53,6 @@ with st.sidebar:
         """,
         unsafe_allow_html=True,
     )
-if ocr_box:
-        option = st.selectbox('Select the document language', list(languages.keys()))
-
-
-def images_to_txt(path):
-    images = pdf2image.convert_from_bytes(path)
-    all_text = []
-    for i in images:
-        pil_im = i
-        text = pytesseract.image_to_string(pil_im, lang=languages[option])
-        # ocr_dict = pytesseract.image_to_data(pil_im, lang='eng', output_type=Output.DICT)
-        # ocr_dict now holds all the OCR info including text and location on the image
-        # text = " ".join(ocr_dict['text'])
-        # text = re.sub('[ ]{2,}', '\n', text)
-        all_text.append(text)
-    return all_text, len(all_text)
 
 pdf_file = st.file_uploader("Load your PDF", type="pdf")
 hide="""
@@ -87,12 +71,13 @@ if pdf_file:
     path = pdf_file.read()
     # display document
     with st.expander("Display document"):
-        displayPDF(pdf_file)
-    
+        displayPDF(path)
+    if ocr_box:
+        option = st.selectbox('Select the document language', list(languages.keys()))
     # pdf to text
     if textOutput == 'One text file (.txt)':
         if ocr_box:
-            texts, nbPages = images_to_txt(path)
+            texts, nbPages = images_to_txt(path, languages[option])
             totalPages = "Pages: "+str(nbPages)+" in total"
             text_data_f = "\n\n".join(texts)
         else:
@@ -103,7 +88,7 @@ if pdf_file:
         st.download_button("Download txt file", text_data_f)
     else:
         if ocr_box:
-            text_data, nbPages = images_to_txt(path)
+            text_data, nbPages = images_to_txt(path, languages[option])
             totalPages = "Pages: "+str(nbPages)+" in total"
         else:
             text_data, nbPages = convert_pdf_to_txt_pages(pdf_file)

@@ -9,6 +9,19 @@ import base64
 #------- OCR ------------
 import pdf2image
 
+@st.cache
+def images_to_txt(path, language):
+    images = pdf2image.convert_from_bytes(path)
+    all_text = []
+    for i in images:
+        pil_im = i
+        text = pytesseract.image_to_string(pil_im, lang=language)
+        # ocr_dict = pytesseract.image_to_data(pil_im, lang='eng', output_type=Output.DICT)
+        # ocr_dict now holds all the OCR info including text and location on the image
+        # text = " ".join(ocr_dict['text'])
+        # text = re.sub('[ ]{2,}', '\n', text)
+        all_text.append(text)
+    return all_text, len(all_text)
 
 @st.cache
 def convert_pdf_to_txt_pages(path):
@@ -83,7 +96,7 @@ def save_pages(pages):
 def displayPDF(file):
   # Opening file from file path
   # with open(file, "rb") as f:
-  base64_pdf = base64.b64encode(file.read()).decode('utf-8')
+  base64_pdf = base64.b64encode(file).decode('utf-8')
 
   # Embedding PDF in HTML
   pdf_display = F'<iframe src="data:application/pdf;base64,{base64_pdf}" width="700" height="1000" type="application/pdf"></iframe>'
