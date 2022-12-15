@@ -55,7 +55,8 @@ with st.sidebar:
     )
 if ocr_box:
         option = st.selectbox('Select the document language', list(languages.keys()))
-@st.cache
+
+
 def images_to_txt(path):
     images = pdf2image.convert_from_bytes(path)
     all_text = []
