@@ -8,6 +8,7 @@ from io import StringIO
 import base64
 #------- OCR ------------
 import pdf2image
+import pytesseract
 from pytesseract import Output, TesseractError
 
 @st.cache
