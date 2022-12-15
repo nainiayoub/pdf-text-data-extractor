@@ -84,6 +84,7 @@ footer{
 """
 st.markdown(hide, unsafe_allow_html=True)
 if pdf_file:
+    path = pdf_file.read()
     # display document
     with st.expander("Display document"):
         displayPDF(pdf_file)
@@ -91,8 +92,7 @@ if pdf_file:
     # pdf to text
     if textOutput == 'One text file (.txt)':
         if ocr_box:
-            st.write(pdf_file.read())
-            texts, nbPages = images_to_txt(pdf_file.read())
+            texts, nbPages = images_to_txt(path)
             totalPages = "Pages: "+str(nbPages)+" in total"
             text_data_f = "\n\n".join(texts)
         else:
@@ -103,7 +103,7 @@ if pdf_file:
         st.download_button("Download txt file", text_data_f)
     else:
         if ocr_box:
-            text_data, nbPages = images_to_txt(pdf_file.read())
+            text_data, nbPages = images_to_txt(path)
             totalPages = "Pages: "+str(nbPages)+" in total"
         else:
             text_data, nbPages = convert_pdf_to_txt_pages(pdf_file)
