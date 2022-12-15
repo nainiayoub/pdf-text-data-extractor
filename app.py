@@ -1,5 +1,5 @@
 import streamlit as st
-from functions import convert_pdf_to_txt_pages, convert_pdf_to_txt_file, save_pages, displayPDF, images_to_txt
+from functions import convert_pdf_to_txt_pages, convert_pdf_to_txt_file, save_pages, displayPDF
 
 st.set_page_config(page_title="PDF to Text")
 
@@ -9,6 +9,8 @@ html_temp = """
             
             </div>
             """
+
+
 
 # st.markdown("""
 #     ## :outbox_tray: Text data extractor: PDF to Text
@@ -25,6 +27,7 @@ languages = {
     'Arabic': 'ara',
     'Spanish': 'spa',
 }
+
 
 with st.sidebar:
     st.title(":outbox_tray: PDF to Text")
@@ -52,6 +55,20 @@ with st.sidebar:
         unsafe_allow_html=True,
     )
 
+@st.cache
+def images_to_txt(path):
+    images = pdf2image.convert_from_bytes(path)
+    all_text = []
+    for i in images:
+        pil_im = i
+        text = pytesseract.image_to_string(pil_im, lang=languages[option])
+        # ocr_dict = pytesseract.image_to_data(pil_im, lang='eng', output_type=Output.DICT)
+        # ocr_dict now holds all the OCR info including text and location on the image
+        # text = " ".join(ocr_dict['text'])
+        # text = re.sub('[ ]{2,}', '\n', text)
+        all_text.append(text)
+    return all_text, len(all_text)
+    
 pdf_file = st.file_uploader("Load your PDF", type="pdf")
 hide="""
 <style>
@@ -73,7 +90,7 @@ if pdf_file:
     # pdf to text
     if textOutput == 'One text file (.txt)':
         if ocr_box:
-            texts, nbPages = images_to_txt(pdf_file.read(), languages[option])
+            texts, nbPages = images_to_txt(pdf_file.read())
             totalPages = "Pages: "+str(nbPages)+" in total"
             text_data_f = "\n\n".join(texts)
         else:
@@ -84,7 +101,7 @@ if pdf_file:
         st.download_button("Download txt file", text_data_f)
     else:
         if ocr_box:
-            text_data, nbPages = images_to_txt(pdf_file.read(), languages[option])
+            text_data, nbPages = images_to_txt(pdf_file.read())
             totalPages = "Pages: "+str(nbPages)+" in total"
         else:
             text_data, nbPages = convert_pdf_to_txt_pages(pdf_file)
