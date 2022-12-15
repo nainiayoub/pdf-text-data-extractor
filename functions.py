@@ -8,6 +8,8 @@ from io import StringIO
 import base64
 #------- OCR ------------
 import pdf2image
+from pytesseract import Output, TesseractError
+from functions import convert_pdf_to_txt_pages, convert_pdf_to_txt_file, save_pages, displayPDF, images_to_txt
 
 @st.cache
 def images_to_txt(path, language):
@@ -96,7 +98,7 @@ def save_pages(pages):
 def displayPDF(file):
   # Opening file from file path
   # with open(file, "rb") as f:
-  base64_pdf = base64.b64encode(file.read()).decode('utf-8')
+  base64_pdf = base64.b64encode(file).decode('utf-8')
 
   # Embedding PDF in HTML
   pdf_display = F'<iframe src="data:application/pdf;base64,{base64_pdf}" width="700" height="1000" type="application/pdf"></iframe>'
