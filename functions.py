@@ -13,12 +13,12 @@ from pytesseract import Output, TesseractError
 
 
 @st.cache
-def images_to_txt(path):
+def images_to_txt(path, language):
     images = pdf2image.convert_from_bytes(path)
     all_text = []
     for i in images:
         pil_im = i
-        text = pytesseract.image_to_string(pil_im, lang=languages[option])
+        text = pytesseract.image_to_string(pil_im, lang=language)
         # ocr_dict = pytesseract.image_to_data(pil_im, lang='eng', output_type=Output.DICT)
         # ocr_dict now holds all the OCR info including text and location on the image
         # text = " ".join(ocr_dict['text'])

@@ -19,12 +19,21 @@ st.markdown("""
     ## Text data extractor: PDF to Text
     
 """)
+languages = {
+    'English': 'eng',
+    'French': 'fra',
+    'Arabic': 'ara',
+    'Spanish': 'spa',
+}
+
 with st.sidebar:
     st.title(":outbox_tray: PDF to Text")
     textOutput = st.selectbox(
         "How do you want your output text?",
         ('One text file (.txt)', 'Text file per page (ZIP)'))
     ocr_box = st.checkbox('Enable OCR (scanned document)')
+    if ocr_box:
+        option = st.selectbox('Select the document language', list(languages.keys()))
     st.markdown(html_temp.format("rgba(55, 53, 47, 0.16)"),unsafe_allow_html=True)
     st.markdown("""
     # How does it work?
@@ -64,7 +73,7 @@ if pdf_file:
     # pdf to text
     if textOutput == 'One text file (.txt)':
         if ocr_box:
-            texts, nbPages = images_to_txt(pdf_file.read())
+            texts, nbPages = images_to_txt(pdf_file.read(), languages[option])
             totalPages = "Pages: "+str(nbPages)+" in total"
             text_data_f = "\n\n".join(texts)
         else:
@@ -75,7 +84,7 @@ if pdf_file:
         st.download_button("Download txt file", text_data_f)
     else:
         if ocr_box:
-            text_data, nbPages = images_to_txt(pdf_file.read())
+            text_data, nbPages = images_to_txt(pdf_file.read(), languages[option])
             totalPages = "Pages: "+str(nbPages)+" in total"
         else:
             text_data, nbPages = convert_pdf_to_txt_pages(pdf_file)
