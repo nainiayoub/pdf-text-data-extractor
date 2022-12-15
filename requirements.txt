@@ -1,2 +1,4 @@
-streamlit==1.7.0
+streamlit
 pdfminer==20191125
+pdf2image
+pytesseract
