@@ -1,5 +1,5 @@
 import streamlit as st
-from functions import convert_pdf_to_txt_pages, convert_pdf_to_txt_file, save_pages, displayPDF
+from functions import convert_pdf_to_txt_pages, convert_pdf_to_txt_file, save_pages, displayPDF, images_to_txt
 
 st.set_page_config(page_title="PDF to Text")
 
@@ -24,6 +24,7 @@ with st.sidebar:
     textOutput = st.selectbox(
         "How do you want your output text?",
         ('One text file (.txt)', 'Text file per page (ZIP)'))
+    ocr_box = st.checkbox('Enable OCR (scanned document)')
     st.markdown(html_temp.format("rgba(55, 53, 47, 0.16)"),unsafe_allow_html=True)
     st.markdown("""
     # How does it work?
@@ -62,13 +63,23 @@ if pdf_file:
     
     # pdf to text
     if textOutput == 'One text file (.txt)':
-        text_data_f, nbPages = convert_pdf_to_txt_file(pdf_file)
-        totalPages = "Pages: "+str(nbPages)+" in total"
+        if ocr_box:
+            texts, nbPages = images_to_txt(pdf_file.read())
+            totalPages = "Pages: "+str(nbPages)+" in total"
+            text_data_f = "\n\n".join(texts)
+        else:
+            text_data_f, nbPages = convert_pdf_to_txt_file(pdf_file)
+            totalPages = "Pages: "+str(nbPages)+" in total"
+
         st.info(totalPages)
         st.download_button("Download txt file", text_data_f)
     else:
-        text_data, nbPages = convert_pdf_to_txt_pages(pdf_file)
-        totalPages = "Pages: "+str(nbPages)+" in total"
+        if ocr_box:
+            text_data, nbPages = images_to_txt(pdf_file.read())
+            totalPages = "Pages: "+str(nbPages)+" in total"
+        else:
+            text_data, nbPages = convert_pdf_to_txt_pages(pdf_file)
+            totalPages = "Pages: "+str(nbPages)+" in total"
         st.info(totalPages)
         zipPath = save_pages(text_data)
         # download text data   
