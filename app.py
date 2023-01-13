@@ -45,14 +45,7 @@ with st.sidebar:
     st.markdown("""
     Made by [@nainia_ayoub](https://twitter.com/nainia_ayoub) 
     """)
-    st.markdown(
-        """
-        <a href="https://www.buymeacoffee.com/nainiayoub" target="_blank">
-        <img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174">
-        </a>
-        """,
-        unsafe_allow_html=True,
-    )
+    
 
 pdf_file = st.file_uploader("Load your PDF", type="pdf")
 hide="""
