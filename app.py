@@ -52,10 +52,13 @@ hide="""
 <style>
 footer{
 	visibility: hidden;
-    position: relative;
+    	position: relative;
 }
 .viewerBadge_container__1QSob{
-    visibility: hidden;
+  	visibility: hidden;
+}
+#MainMenu{
+	visibility: hidden;
 }
 <style>
 """
