@@ -11,7 +11,7 @@ import pdf2image
 import pytesseract
 from pytesseract import Output, TesseractError
 
-@st.cache
+@st.cache_data
 def images_to_txt(path, language):
     images = pdf2image.convert_from_bytes(path)
     all_text = []
@@ -25,7 +25,7 @@ def images_to_txt(path, language):
         all_text.append(text)
     return all_text, len(all_text)
 
-@st.cache
+@st.cache_data
 def convert_pdf_to_txt_pages(path):
     texts = []
     rsrcmgr = PDFResourceManager()
@@ -54,7 +54,7 @@ def convert_pdf_to_txt_pages(path):
     retstr.close()
     return texts, nbPages
 
-@st.cache
+@st.cache_data
 def convert_pdf_to_txt_file(path):
     texts = []
     rsrcmgr = PDFResourceManager()
@@ -76,7 +76,7 @@ def convert_pdf_to_txt_file(path):
     retstr.close()
     return t, nbPages
 
-@st.cache
+@st.cache_data
 def save_pages(pages):
   
   files = []
