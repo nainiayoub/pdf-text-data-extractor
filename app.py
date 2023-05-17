@@ -56,7 +56,7 @@ with st.sidebar:
     )
     
 
-pdf_file = st.file_uploader("Load your PDF", type="pdf")
+pdf_file = st.file_uploader("Load your PDF", type=['pdf', 'png', 'jpg'])
 hide="""
 <style>
 footer{
