@@ -115,7 +115,7 @@ if pdf_file:
         st.image(pdf_file)
         option = st.selectbox("What's the language of the text in the image?", list(languages.keys()))
         pil_image = Image.open(pdf_file)
-        text = pytesseract.image_to_string(pil_image, lang=option)
+        text = pytesseract.image_to_string(pil_image, lang=languages[option])
         st.info(text)
         st.download_button("Download txt file", text)
 
