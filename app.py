@@ -112,11 +112,16 @@ if pdf_file:
                     mime="application/zip"
                 )
     else:
-        st.image(pdf_file)
         option = st.selectbox("What's the language of the text in the image?", list(languages.keys()))
         pil_image = Image.open(pdf_file)
         text = pytesseract.image_to_string(pil_image, lang=languages[option])
-        st.info(text)
+        col1, col2 = st.columns(2)
+        with col1:
+            with st.expander("Display Image"):
+                st.image(pdf_file)
+        with col2:
+            with st.expander("Display Text"):
+                st.info(text)
         st.download_button("Download txt file", text)
 
     st.markdown('''
