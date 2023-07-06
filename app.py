@@ -7,7 +7,6 @@ from functions import convert_pdf_to_txt_pages, convert_pdf_to_txt_file, save_pa
 
 st.set_page_config(page_title="PDF to Text")
 
-
 html_temp = """
             <div style="background-color:{};padding:1px">
             
