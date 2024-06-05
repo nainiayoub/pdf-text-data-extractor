@@ -1,6 +1,7 @@
 # PDF to Text
 [![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://share.streamlit.io/nainiayoub/pdf-text-data-extractor/main/app.py)
 
+![visitor badge](https://visitor-badge.glitch.me/badge?page_id=nainiayoub.pdf-text-data-extractor)
 ![forks badge](https://img.shields.io/github/forks/nainiayoub/pdf-text-data-extractor)
 ![starts badge](https://img.shields.io/github/stars/nainiayoub/pdf-text-data-extractor?style=social)
 
